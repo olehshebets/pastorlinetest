@@ -140,8 +140,10 @@ export const ModalB = ({ show, handleShow, switchModal }) => {
     const [showC, setShowC] = useState();
     const [query, setQuery] = useState();
     const [selectedContact, setSelectedContact] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     async function getData({page, loadMore}) {
+        setIsLoading(true);
         if (!loadMore) {
             setData([]);
         }
@@ -150,12 +152,15 @@ export const ModalB = ({ show, handleShow, switchModal }) => {
             page
         });
         if (res.status === 200) {
-            console.log(res);
+            setIsLoading(false);
             if (!loadMore) {
                 setData(Object.values(res.data.contacts));
             } else {              
                 setData(data.concat(Object.values(res.data.contacts)));
             }
+        } else {
+            setIsLoading(false);
+            console.log(res);
         }
     }
 
@@ -197,7 +202,7 @@ export const ModalB = ({ show, handleShow, switchModal }) => {
                     <Modal.Title>US Contacts</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <InputGroup>
+                    <InputGroup style={{ marginBottom: 10 }}>
                         <Form.Control
                             placeholder="Search"
                             aria-label="Search"
@@ -211,7 +216,7 @@ export const ModalB = ({ show, handleShow, switchModal }) => {
                                 loadMore={loadMore}
                                 initialLoad={false}
                                 hasMore={true}
-                                loader={<div className="loader" key={0}>Loading ...</div>}
+                                loader={isLoading ? <div className="loader" key={0}>Loading ...</div> : null}
                                 useWindow={false}
                             >
                                 {data.map(contact => 
