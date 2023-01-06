@@ -1,0 +1,27 @@
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+#root {
+    height: 100vh;
+}
+
+.App {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+#buttonA,
+#modalButtonA {
+    background-color: #46139f;
+    border-color: #46139f;
+
+}
+
+#buttonB,
+#modalButtonB {
+    background-color: #ff7f50;
+    border-color: #ff7f50;
+
+}
